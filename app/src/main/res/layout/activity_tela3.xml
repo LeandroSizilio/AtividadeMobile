@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@id/main"
+    android:background="@color/background"
+>
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar5"
@@ -32,11 +35,15 @@
         android:id="@+id/imageButton2"
         android:layout_width="140dp"
         android:layout_height="140dp"
-        android:background="@color/background"
+        android:background="@drawable/rounded_toolbar_background"
         android:scaleType="fitCenter"
-        app:layout_constraintStart_toStartOf="@+id/materialToolbar5"
-        app:srcCompat="@drawable/image2"
-        tools:layout_editor_absoluteY="263dp" />
+        app:layout_constraintBottom_toTopOf="@+id/imageButton8"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton7"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/materialToolbar7"
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar7"
+        app:layout_constraintVertical_bias="0.506"
+        app:srcCompat="@drawable/image2" />
 
     <TextView
         android:id="@+id/textView5"
@@ -69,15 +76,16 @@
         android:id="@+id/imageButton7"
         android:layout_width="140dp"
         android:layout_height="140dp"
-        android:layout_marginStart="72dp"
-        android:background="@color/background"
+        android:background="@drawable/rounded_toolbar_background"
         android:padding="25dp"
         android:paddingBottom="20dp"
         android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="@+id/materialToolbar5"
-        app:layout_constraintStart_toEndOf="@+id/imageButton2"
-        app:srcCompat="@drawable/mago"
-        tools:layout_editor_absoluteY="263dp" />
+        app:layout_constraintBottom_toTopOf="@+id/imageButton8"
+        app:layout_constraintEnd_toEndOf="@+id/materialToolbar7"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/imageButton8"
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar7"
+        app:srcCompat="@drawable/mago" />
 
     <TextView
         android:id="@+id/textView7"
@@ -97,12 +105,15 @@
         android:id="@+id/imageButton8"
         android:layout_width="140dp"
         android:layout_height="140dp"
-        android:background="@color/background"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton2"
+        android:layout_marginTop="192dp"
+        android:padding="25dp"
+        android:scaleType="fitCenter"
+        android:background="@drawable/rounded_toolbar_background"
+        app:layout_constraintEnd_toEndOf="@+id/materialToolbar7"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageButton2"
-        app:srcCompat="@drawable/image4"
-        tools:layout_editor_absoluteY="461dp" />
+        app:layout_constraintStart_toStartOf="@+id/materialToolbar7"
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar7"
+        app:srcCompat="@drawable/r" />
 
     <TextView
         android:id="@+id/textView8"
@@ -152,6 +163,31 @@
         app:layout_constraintEnd_toEndOf="@+id/materialToolbar7"
         app:layout_constraintStart_toStartOf="@+id/materialToolbar7"
         app:layout_constraintTop_toTopOf="@+id/materialToolbar7" />
+
+    <ImageButton
+        android:id="@+id/imageButton9"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:background="@drawable/rounded_toolbar_background"
+        android:scaleType="fitCenter"
+        android:padding="10dp"
+        app:srcCompat="@drawable/clerigo"
+        tools:layout_editor_absoluteX="221dp"
+        tools:layout_editor_absoluteY="434dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medieval_sharp_regular"
+        android:text="Clérigo"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton9"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton9"
+        app:layout_constraintStart_toStartOf="@+id/imageButton9"
+        app:layout_constraintTop_toTopOf="@+id/imageButton9"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
