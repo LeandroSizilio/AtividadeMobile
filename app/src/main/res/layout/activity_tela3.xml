@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@id/main"
-    android:background="@color/background"
+    android:background="@drawable/folha2"
 >
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -144,7 +144,7 @@
         android:id="@+id/materialToolbar7"
         android:layout_width="326dp"
         android:layout_height="62dp"
-        android:background="@color/surface"
+        android:background="@drawable/folha2"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="@+id/materialToolbar5"
@@ -188,6 +188,18 @@
         app:layout_constraintStart_toStartOf="@+id/imageButton9"
         app:layout_constraintTop_toTopOf="@+id/imageButton9"
         app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voltar"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:fontFamily="@font/medieval_sharp_regular"
+        android:background="@drawable/imagebutton_border"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="667dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
