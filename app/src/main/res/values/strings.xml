@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">AtividadeMobile</string>
     <string name="d_e_d">Dungeons &amp; Dices</string>
+    <string name="guerreiro">Guerreiro</string>
+    <string name="guerreiro2">Guerreiro</string>
+    <string name="mago">Mago</string>
+    <string name="ladino">Ladino</string>
+    <string name="clique_na_classe_e_saiba_mais_sobre">Clique na classe e saiba mais sobre</string>
+    <string name="cl_rigo">Clérigo</string>
+    <string name="voltar">Voltar</string>
 </resources>
