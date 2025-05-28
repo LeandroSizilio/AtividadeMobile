@@ -15,12 +15,8 @@ public class Tela2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela2); // Define o layout para activity_tela2.xml
 
-        // Encontra o ImageButton com o ID "imageButton"
         ImageButton classesButton = findViewById(R.id.imageButton);
-
-        // Define um OnClickListener para o ImageButton
         classesButton.setOnClickListener(v -> {
-            // Cria uma Intent para iniciar a atividade Tela3
             Intent intent = new Intent(Tela2.this, Tela3.class);
             startActivity(intent); // Inicie a atividade Tela3
         });
