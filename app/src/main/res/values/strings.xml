@@ -8,4 +8,30 @@
     <string name="clique_na_classe_e_saiba_mais_sobre">Clique na classe e saiba mais sobre</string>
     <string name="cl_rigo">Clérigo</string>
     <string name="voltar">Voltar</string>
+    <string name="quero">Quero jogar</string>
+    <string name="titulo_guerreiro">O Mestre das Armas e da Batalha</string>
+    <string name="descricaoGuerreiro">
+        O Guerreiro é o combatente focado em força física e domínio de armas e armaduras.
+        Resiliente, atua na linha de frente, absorvendo e causando dano. \n
+        É a personificação da resiliência e habilidade marcial.
+    </string>
+    <string name="titulo_mago">O Senhor das Artes Místicas</string>
+    <string name="descricaoMago">
+        O Mago é o arcanista que domina as artes místicas. \n
+        Ele manipula as energias do mundo para lançar magias ofensivas, defensivas ou de utilidade. \n
+        Frágil fisicamente, compensa com poder arcano imenso, controlando o campo de batalha.
+    </string>
+    <string name="titulo_clerigo">O Escudo da Fé</string>
+    <string name="descricaoClerigo">
+        O Clérigo é o arauto do divino, canalizando o poder de sua fé para curar, proteger e confrontar o mal. \n
+        É a personificação da devoção e da misericórdia no campo de batalha.
+    </string>
+    <string name="titulo_ladino">O Mestre das Sombras</string>
+    <string name="descricaoLadino">
+        O Ladino é o mestre da discrição. Age nas sombras para neutralizar perigos e efetuar ataques surpresa. \n
+        Foca em agilidade e inteligência. É a perspicácia encarnada.
+    </string>
+
+
+
 </resources>

@@ -11,6 +11,7 @@
 
     <!-- Cores de texto -->
     <color name="text_primary">#212121</color>
+    <color name="texto_mago">#051D6D</color>
     <color name="text_secondary">#757575</color>
 
     <!-- Outras cores -->

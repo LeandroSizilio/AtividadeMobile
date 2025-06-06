@@ -15,7 +15,7 @@ public class Tela3 extends AppCompatActivity {
         setContentView(R.layout.activity_tela3); // Define o layout para activity_tela3.xml
 
         // Encontre o Button com o ID "button"
-        Button backButton = findViewById(R.id.button);
+        Button backButton = findViewById(R.id.button_voltar);
 
         // Defina um OnClickListener para o botão "Voltar"
         backButton.setOnClickListener(v -> {
