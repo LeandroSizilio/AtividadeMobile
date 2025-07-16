@@ -1,4 +1,4 @@
-name: meu_app_migrado
+name: aplicativo_flutter
 description: Um app Flutter migrado de Java.
 version: 1.0.0+1
 
@@ -12,6 +12,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true
