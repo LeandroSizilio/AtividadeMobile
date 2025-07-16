@@ -3,7 +3,7 @@ import 'telas/tela_inicial.dart';
 import 'telas/tela_menu.dart';
 import 'telas/tela_classe.dart';
 
-void main() => runApp(MeuApp());
+void main() => runApp(const MeuApp());
 
 class MeuApp extends StatelessWidget {
   const MeuApp({super.key});
