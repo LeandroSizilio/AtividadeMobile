@@ -26,7 +26,7 @@ class Ficha{
     };
   }
 
-  // Convertendo do Map (quando buscano banco)
+  // Convertendo do Map (quando busca no banco)
   factory Ficha.fromMap(Map<String, dynamic> map){
     return Ficha(
       nome: map['nome'], race: map['race'],

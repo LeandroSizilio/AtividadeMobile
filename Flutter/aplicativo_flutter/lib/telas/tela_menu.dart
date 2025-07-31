@@ -70,25 +70,30 @@ class TelaMenu extends StatelessWidget {
               ),
             ),
           ),
-          // Botão de Fichas
+          // Botão de Fichas (Atualizado para navegar)
           Align(
             alignment: Alignment.centerRight,
             child: Padding(
               padding: const EdgeInsets.only(right: 16),
-              child: Container(
-                width: 150,
-                height: 90,
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  border: Border.all(
-                    color: Colors.black, // Cor #000000
-                    width: 2.0,
+              child: GestureDetector( // Adicionado GestureDetector aqui
+                onTap: () {
+                  Navigator.pushNamed(context, '/ficha'); // Navega para a tela de ficha
+                },
+                child: Container(
+                  width: 150,
+                  height: 90,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    border: Border.all(
+                      color: Colors.black, // Cor #000000
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Image.asset('assets/imagens/fichas.png'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Image.asset('assets/imagens/fichas.png'),
+                  ),
                 ),
               ),
             ),

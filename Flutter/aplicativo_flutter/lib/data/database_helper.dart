@@ -39,17 +39,17 @@ class DatabaseHelper {
     ''');
   }
 
-  Future<void> verificarBanco() async {
-    final db = await database;
-    final resultado = await db.rawQuery(
-      "SELECT name FROM sqlite_master WHERE type='table'"
-    );
+  // Future<void> verificarBanco() async {
+  //   final db = await database;
+  //   final resultado = await db.rawQuery(
+  //     "SELECT name FROM sqlite_master WHERE type='table'"
+  //   );
 
-    print('Tabelas no banco:');
-    for (var row in resultado) {
-      print(row['name']);
-    }
-  }
+  //   print('Tabelas no banco:');
+  //   for (var row in resultado) {
+  //     print(row['name']);
+  //   }
+  // }
 }
 
 
