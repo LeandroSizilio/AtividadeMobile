@@ -1,12 +1,11 @@
 // tela_detalhes_classe.dart
 
 import 'package:flutter/material.dart';
-import '../services/api_service.dart'; // Ajuste o caminho
-import '../data/models/classe_model.dart'; // Ajuste o caminho
+import '../services/api_service.dart';
+import '../data/models/classe_model.dart';
 
 class TelaDetalhesClasse extends StatefulWidget {
   final String classIndex;
-
   const TelaDetalhesClasse({Key? key, required this.classIndex}) : super(key: key);
 
   @override
@@ -23,12 +22,46 @@ class _TelaDetalhesClasseState extends State<TelaDetalhesClasse> {
     _detalhesFuture = _apiService.fetchClasseDetails(widget.classIndex);
   }
 
+  // Widget auxiliar para criar seções de informação de forma consistente
+  Widget _buildInfoSection({required String title, required List<String> items, IconData? icon}) {
+    if (items.isEmpty) return const SizedBox.shrink(); // Não mostra nada se a lista for vazia
+
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      elevation: 3,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                if (icon != null) Icon(icon, color: Colors.brown, size: 20),
+                if (icon != null) const SizedBox(width: 8),
+                Text(
+                  title,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.brown),
+                ),
+              ],
+            ),
+            const Divider(height: 16),
+            // Usa o ... (spread operator) para adicionar todos os widgets da lista
+            ...items.map((item) => Padding(
+                  padding: const EdgeInsets.only(bottom: 4.0),
+                  child: Text('• $item', style: const TextStyle(fontSize: 15)),
+                )),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detalhes da Classe'),
-        backgroundColor: Colors.brown, // Cor temática de D&D
+        title: Text('Detalhes de ${widget.classIndex.capitalize()}'),
+        backgroundColor: Colors.brown[700],
       ),
       body: FutureBuilder<ClasseDetalhes>(
         future: _detalhesFuture,
@@ -44,34 +77,66 @@ class _TelaDetalhesClasseState extends State<TelaDetalhesClasse> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    detalhes.name,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  const Divider(height: 30, thickness: 2),
-                  
-                  // Exemplo de como exibir um dado
+                  // --- SEÇÃO PRINCIPAL ---
                   Card(
+                    elevation: 3,
                     child: ListTile(
-                      title: const Text('Dado de Vida (Hit Die)', style: TextStyle(fontWeight: FontWeight.bold)),
-                      trailing: Text(
-                        'd${detalhes.hitDie}',
-                        style: const TextStyle(fontSize: 18),
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.brown,
+                        child: Text('d${detalhes.hitDie}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                       ),
+                      title: Text(detalhes.name, style: Theme.of(context).textTheme.headlineSmall),
+                      subtitle: const Text('Dado de Vida'),
                     ),
                   ),
-                  
-                  // Adicione aqui mais widgets para exibir outras informações
-                  // Ex: Proficiências, Equipamentos, etc.
-                  // Você precisará adicionar esses campos ao seu modelo ClasseDetalhes
-                  // e parseá-los do JSON.
+                  if (detalhes.spellcastingAbility != 'Nenhuma')
+                  Card(
+                    elevation: 3,
+                    margin: const EdgeInsets.only(top: 8),
+                    child: ListTile(
+                       leading: const Icon(Icons.auto_stories, color: Colors.brown),
+                       title: const Text('Habilidade de Conjuração'),
+                       trailing: Text(detalhes.spellcastingAbility, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
 
-                  const SizedBox(height: 20),
-                  Text(
-                    'Aqui você pode adicionar mais detalhes como proficiências, equipamentos iniciais, habilidades, etc., buscando-os da API e exibindo-os.',
-                    style: Theme.of(context).textTheme.bodySmall,
+                  // --- SEÇÕES DE LISTA USANDO O WIDGET AUXILIAR ---
+                  
+                  _buildInfoSection(
+                    title: 'Testes de Resistência',
+                    items: detalhes.savingThrows,
+                    icon: Icons.shield_outlined,
+                  ),
+
+                  _buildInfoSection(
+                    title: 'Proficiências',
+                    items: detalhes.proficiencies,
+                    icon: Icons.star_border,
+                  ),
+
+                  _buildInfoSection(
+                    title: 'Escolhas de Perícias',
+                    items: detalhes.proficiencyChoices,
+                    icon: Icons.check_circle_outline,
+                  ),
+
+                  _buildInfoSection(
+                    title: 'Equipamento Inicial',
+                    items: detalhes.startingEquipment,
+                    icon: Icons.backpack_outlined,
+                  ),
+
+                  _buildInfoSection(
+                    title: 'Opções de Equipamento',
+                    items: detalhes.startingEquipmentOptions,
+                    icon: Icons.ballot_outlined,
+                  ),
+                  
+                  _buildInfoSection(
+                    title: 'Subclasses Disponíveis',
+                    items: detalhes.subclasses,
+                    icon: Icons.groups_2_outlined,
                   ),
                 ],
               ),
@@ -83,4 +148,11 @@ class _TelaDetalhesClasseState extends State<TelaDetalhesClasse> {
       ),
     );
   }
+}
+
+// Pequena extensão para deixar a primeira letra maiúscula
+extension StringExtension on String {
+    String capitalize() {
+      return "${this[0].toUpperCase()}${substring(1)}";
+    }
 }
