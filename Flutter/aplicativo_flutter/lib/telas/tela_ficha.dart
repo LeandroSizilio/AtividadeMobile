@@ -142,25 +142,32 @@ class _TelaFichaState extends State<TelaFicha> {
 
   // Método para buscar detalhes da classe para HP e Mana
   Future<void> _fetchClassDetails(String classIndex) async {
-    final url = Uri.parse('https://www.dnd5eapi.co/api/classes/$classIndex');
-    try {
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        setState(() {
-          // A API D&D 5e usa "hit_die" para HP
-          _hp = data['hit_die'] ?? 0;
-          // A API não tem uma propriedade 'mana' direta, então vamos manter a lógica fixa para mana.
-          _mana = _getClassMana(classIndex);
-        });
-      } else {
-        print('Falha ao carregar detalhes da classe: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Erro ao buscar detalhes da classe: $e');
-    }
+    // A API não é mais usada para HP, apenas para fins de referência
+    setState(() {
+      _hp = _getClassHp(classIndex);
+      _mana = _getClassMana(classIndex);
+    });
   }
   
+  // Helper para obter HP da classe
+  int _getClassHp(String classIndex) {
+    switch (classIndex) {
+      case 'barbarian': return 24; // Valor dobrado
+      case 'fighter': return 20; // Valor dobrado
+      case 'paladin': return 20; // Valor dobrado
+      case 'ranger': return 10;
+      case 'bard': return 8;
+      case 'cleric': return 16; // Valor dobrado
+      case 'druid': return 8;
+      case 'monk': return 16; // Valor dobrado
+      case 'rogue': return 16; // Valor dobrado
+      case 'sorcerer': return 6;
+      case 'warlock': return 6;
+      case 'wizard': return 6;
+      default: return 0;
+    }
+  }
+
   // Helper para obter Mana da classe (exemplo)
   int _getClassMana(String classIndex) {
     // Lógica fixa para mana, pois a API não a fornece diretamente

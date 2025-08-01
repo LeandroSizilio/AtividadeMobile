@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data/ficha_repository.dart';
 import '../data/models/ficha.dart';
+import 'tela_visualizar_ficha.dart';
 
 class TelaListaFichas extends StatefulWidget {
   @override
@@ -71,9 +72,14 @@ class _TelaListaFichasState extends State<TelaListaFichas> {
                                   _carregarFichas(); // Recarrega a lista após deletar
                                 },
                               ),
-                              onTap: () {
-                                // Implementar navegação para a tela de visualização/edição da ficha
-                                // Navigator.pushNamed(context, '/visualizar-ficha', arguments: ficha);
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TelaVisualizarFicha(ficha: ficha),
+                                  ),
+                                );
+                                _carregarFichas(); // Recarrega a lista após voltar da tela de visualização
                               },
                             );
                           },

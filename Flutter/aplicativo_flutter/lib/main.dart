@@ -4,6 +4,8 @@ import 'telas/tela_menu.dart';
 import 'telas/tela_classe.dart';
 import 'telas/tela_ficha.dart'; // Importe a nova tela de ficha
 import 'telas/telas_listar_fichas.dart'; // Importe a nova tela de ficha
+import 'telas/tela_visualizar_ficha.dart';
+
 
 void main() => runApp(const MeuApp());
 
