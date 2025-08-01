@@ -31,6 +31,7 @@ class DatabaseHelper {
         con INTEGER,
         inteli INTEGER,
         wis INTEGER,
+        cha INTEGER,
         hp INTEGER,
         mana INTEGER,
         nome TEXT NOT NULL,

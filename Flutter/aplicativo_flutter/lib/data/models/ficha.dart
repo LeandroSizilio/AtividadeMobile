@@ -2,7 +2,7 @@ class Ficha{
   final int? id;
 
   final int? str; final int? dex; final int? con; 
-  final int? inteli; final int? wis; 
+  final int? inteli; final int? wis; final int? cha; 
 
   final int? hp; final int? mana; 
   
@@ -11,7 +11,7 @@ class Ficha{
   
   // init
   Ficha({
-    this.id, this.str, this.dex, this.con, this.inteli, this.wis,
+    this.id, this.str, this.dex, this.con, this.inteli, this.wis, this.cha,
     this.hp, this.mana, 
     required this.nome, required this.race
     });
@@ -20,7 +20,7 @@ class Ficha{
   Map<String, dynamic> toMap(){
     return{
       'id': id,
-      'str': str, 'dex': dex, 'con': con, 'inteli': inteli, 'wis': wis,
+      'str': str, 'dex': dex, 'con': con, 'inteli': inteli, 'wis': wis, 'cha': cha,
       'hp': hp, 'mana': mana,
       'nome': nome, 'race': race,
     };
@@ -30,7 +30,7 @@ class Ficha{
   factory Ficha.fromMap(Map<String, dynamic> map){
     return Ficha(
       nome: map['nome'], race: map['race'],
-      str: map['str'], dex: map['dex'], con: map['con'], inteli: map['inteli'], wis: map['wis'], 
+      str: map['str'], dex: map['dex'], con: map['con'], inteli: map['inteli'], wis: map['wis'],  cha: map['cha'],
       hp: map['hp'], mana: map['mana'],
     );
   }
