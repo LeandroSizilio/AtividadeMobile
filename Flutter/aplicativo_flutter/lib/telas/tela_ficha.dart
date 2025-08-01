@@ -17,6 +17,10 @@ class _TelaFichaState extends State<TelaFicha> {
   List<Map<String, dynamic>> _races = [];
   bool _isLoadingRaces = true;
 
+  // Lista de classes obtidas da API
+  List<Map<String, dynamic>> _classes = [];
+  bool _isLoadingClasses = true;
+
   String _selectedRace = 'Escolha a Raça';
   String _selectedClass = 'Escolha a Classe';
   int _pointsAvailable = 10;
@@ -44,28 +48,20 @@ class _TelaFichaState extends State<TelaFicha> {
   Map<String, int> _raceBonuses = {
     'str': 0, 'dex': 0, 'con': 0, 'int': 0, 'wis': 0, 'cha': 0
   };
-
-  // Alteração das regras de negócio: HP e Mana
-  final Map<String, int> baseHpByClass = {
-    'Guerreiro': 50,
-    'Mago': 40,
-    'Arqueiro': 60,
-  };
-
-  final Map<String, int> baseManaByRace = {
-    'Humano': 10,
-    'Elfo': 50,
-    'Anão': 20,
-  };
+  
+  // Variáveis temporárias para a seleção da raça e classe
+  String _tempSelectedRace = 'Escolha a Raça';
+  String _tempSelectedClass = 'Escolha a Classe';
 
   @override
   void initState() {
     super.initState();
     _fetchRaces();
+    _fetchClasses();
     _calculateStats();
   }
 
-  // Novo método para buscar as raças da API
+  // Método para buscar as raças da API
   Future<void> _fetchRaces() async {
     final url = Uri.parse('https://www.dnd5eapi.co/api/races');
     try {
@@ -90,7 +86,32 @@ class _TelaFichaState extends State<TelaFicha> {
     }
   }
 
-  // Novo método para buscar os bônus de uma raça específica
+  // Novo método para buscar as classes da API
+  Future<void> _fetchClasses() async {
+    final url = Uri.parse('https://www.dnd5eapi.co/api/classes');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          _classes = List<Map<String, dynamic>>.from(data['results']);
+          _isLoadingClasses = false;
+        });
+      } else {
+        print('Falha ao carregar classes: ${response.statusCode}');
+        setState(() {
+          _isLoadingClasses = false;
+        });
+      }
+    } catch (e) {
+      print('Erro ao buscar classes: $e');
+      setState(() {
+        _isLoadingClasses = false;
+      });
+    }
+  }
+
+  // Método para buscar os bônus de uma raça específica
   Future<void> _fetchRaceBonuses(String raceIndex) async {
     final url = Uri.parse('https://www.dnd5eapi.co/api/races/$raceIndex');
     try {
@@ -103,6 +124,9 @@ class _TelaFichaState extends State<TelaFicha> {
         for (var bonus in data['ability_bonuses']) {
           String ability = bonus['ability_score']['index'];
           int value = bonus['bonus'];
+          if (ability == 'int') { // A API usa 'int' para Intelligence
+             ability = 'inteli';
+          }
           if (_raceBonuses.containsKey(ability)) {
             _raceBonuses[ability] = value;
           }
@@ -113,6 +137,47 @@ class _TelaFichaState extends State<TelaFicha> {
       }
     } catch (e) {
       print('Erro ao buscar bônus da raça: $e');
+    }
+  }
+
+  // Método para buscar detalhes da classe para HP e Mana
+  Future<void> _fetchClassDetails(String classIndex) async {
+    final url = Uri.parse('https://www.dnd5eapi.co/api/classes/$classIndex');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          // A API D&D 5e usa "hit_die" para HP
+          _hp = data['hit_die'] ?? 0;
+          // A API não tem uma propriedade 'mana' direta, então vamos manter a lógica fixa para mana.
+          _mana = _getClassMana(classIndex);
+        });
+      } else {
+        print('Falha ao carregar detalhes da classe: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erro ao buscar detalhes da classe: $e');
+    }
+  }
+  
+  // Helper para obter Mana da classe (exemplo)
+  int _getClassMana(String classIndex) {
+    // Lógica fixa para mana, pois a API não a fornece diretamente
+    switch (classIndex) {
+      case 'barbarian': return 10;
+      case 'bard': return 30;
+      case 'cleric': return 40;
+      case 'druid': return 35;
+      case 'fighter': return 15;
+      case 'monk': return 25;
+      case 'paladin': return 20;
+      case 'ranger': return 18;
+      case 'rogue': return 12;
+      case 'sorcerer': return 50;
+      case 'warlock': return 45;
+      case 'wizard': return 60;
+      default: return 0;
     }
   }
 
@@ -130,12 +195,16 @@ class _TelaFichaState extends State<TelaFicha> {
 
   void _calculateStats() {
     setState(() {
-      // Invertendo a lógica: HP pela classe, Mana pela raça
-      _hp = (_selectedClass != 'Escolha a Classe') ? baseHpByClass[_selectedClass]! : 0;
-      _mana = (_selectedRace != 'Escolha a Raça') ? baseManaByRace[_selectedRace]! : 0;
+      // HP e Mana agora serão calculados com base na classe selecionada
+      if (_selectedClass != 'Escolha a Classe') {
+        _fetchClassDetails(_selectedClass.toLowerCase());
+      } else {
+        _hp = 0;
+        _mana = 0;
+      }
     });
   }
-
+  
   void _updatePoints(String attribute, int value) {
     setState(() {
       if (value > 0 && _pointsAvailable > 0) {
@@ -202,10 +271,6 @@ class _TelaFichaState extends State<TelaFicha> {
       _applyBonuses();
     });
   }
-  
-  // Variaveis temporarias para a seleção da raça e classe
-  String _tempSelectedRace = 'Escolha a Raça';
-  String _tempSelectedClass = 'Escolha a Classe';
 
   void _showRaceSelection(BuildContext context) {
     showDialog(
@@ -238,7 +303,7 @@ class _TelaFichaState extends State<TelaFicha> {
                   _selectedRace = _tempSelectedRace;
                   _calculateStats();
                 });
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(); // Fecha o modal
               },
             ),
           ],
@@ -253,36 +318,23 @@ class _TelaFichaState extends State<TelaFicha> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Escolha uma Classe'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                ListTile(
-                  title: Text('Guerreiro'),
-                  onTap: () {
-                    setState(() {
-                      _tempSelectedClass = 'Guerreiro';
-                    });
-                  },
+          content: _isLoadingClasses
+              ? CircularProgressIndicator()
+              : SingleChildScrollView(
+                  child: ListBody(
+                    children: _classes.map((dndClass) {
+                      return ListTile(
+                        title: Text(dndClass['name']),
+                        onTap: () {
+                          setState(() {
+                            _tempSelectedClass = dndClass['name'];
+                            _fetchClassDetails(dndClass['index']); // Fetch class details
+                          });
+                        },
+                      );
+                    }).toList(),
+                  ),
                 ),
-                ListTile(
-                  title: Text('Mago'),
-                  onTap: () {
-                    setState(() {
-                      _tempSelectedClass = 'Mago';
-                    });
-                  },
-                ),
-                ListTile(
-                  title: Text('Arqueiro'),
-                  onTap: () {
-                    setState(() {
-                      _tempSelectedClass = 'Arqueiro';
-                    });
-                  },
-                ),
-              ],
-            ),
-          ),
           actions: <Widget>[
             TextButton(
               child: Text('Confirmar'),
@@ -291,7 +343,7 @@ class _TelaFichaState extends State<TelaFicha> {
                   _selectedClass = _tempSelectedClass;
                   _calculateStats();
                 });
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(); // Fecha o modal
               },
             ),
           ],

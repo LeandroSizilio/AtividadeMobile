@@ -75,9 +75,9 @@ class TelaMenu extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: Padding(
               padding: const EdgeInsets.only(right: 16),
-              child: GestureDetector( // Adicionado GestureDetector aqui
+              child: GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/ficha'); // Navega para a tela de ficha
+                  Navigator.pushNamed(context, '/fichas'); // Rota corrigida para a tela de lista
                 },
                 child: Container(
                   width: 150,
